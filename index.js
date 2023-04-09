@@ -5,29 +5,30 @@ import { insertionSort } from './modules/insertion_sort.js';
 import { quickSort } from './modules/quick_sort.js';
 import { mergeSort } from './modules/merge_sort.js';
 
-const array = [];
-for (let i = 0; i < 10000; i++) {
-  array.push(Math.floor(Math.random() * 10000));
-}
+const arrayLenght = 10000;
+const arrayElementRange = 100;
 
+const array = generateRandomNumArray(arrayLenght, arrayElementRange);
+
+function generateRandomNumArray(lenght, range) {
+  const array = [];
+  for (let i = 0; i < lenght; i++) {
+    array.push(Math.floor(Math.random() * range));
+  }
+  return array;
+}
 const sortArrayBy = (inputArray, func) => {
   let resultArray = inputArray.slice(0);
+  const timeSart = performance.now();
   func(resultArray);
-  return resultArray;
+  const timeEnd = performance.now();
+  console.log(
+    `Araay was sorted by ${func.name} during ${timeEnd - timeSart} miliseconds`
+  );
 };
 
-console.time('bubleSort');
 sortArrayBy(array, bubleSort);
-console.timeEnd('bubleSort');
-console.time('SortByChoice');
 sortArrayBy(array, selectiveSort);
-console.timeEnd('SortByChoice');
-console.time('insertionSort');
 sortArrayBy(array, insertionSort);
-console.timeEnd('insertionSort');
-console.time('quickSort');
 sortArrayBy(array, quickSort);
-console.timeEnd('quickSort');
-console.time('mergeSort');
 sortArrayBy(array, mergeSort);
-console.timeEnd('mergeSort');
